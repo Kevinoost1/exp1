@@ -1,0 +1,566 @@
+---
+API: 2.1
+OpenSesame: 3.3.14
+Platform: nt
+---
+set width 1024
+set uniform_coordinates yes
+set title "Extended template"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set round_decimals 2
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "C:/Users/2mrwm/Documents/WO_Master/psy_exp1/assignment"
+set disable_garbage_collection yes
+set description "A template containing a practice and an experimental phase"
+set coordinates uniform
+set compensation 0
+set canvas_backend psycho
+set bidi yes
+set background black
+
+define inline_script __init__
+	set description "Executes Python code"
+	set _run ""
+	___prepare__
+	var.multiplier = 0
+	var.multiplicand = 0
+	var.answer = 0
+	
+	var.block_count = 0
+	var.progress_width = 0
+	__end__
+
+define inline_script __init___1
+	set description "Executes Python code"
+	set _run ""
+	___prepare__
+	var.multiplier = 0
+	var.multiplicand = 0
+	var.answer = 0
+	
+	var.block_count = 0
+	var.progress_width = 0
+	__end__
+
+define notepad about_this_template
+	__note__
+	This template already contains the basic structure of a typical experiment.
+	It consists of a practice phase, followed by an experimental phase. For more
+	information, please visit <http://osdoc.cogsci.nl/>
+	Have fun with OpenSesame!
+	__end__
+	set description "Some pointers to help you gest started!"
+
+define sketchpad blank
+	set duration 1500
+	set description "Displays stimuli"
+
+define sketchpad blank_1
+	set duration 1500
+	set description "Displays stimuli"
+
+define inline_script block_count_update
+	set description "Executes Python code"
+	___run__
+	var.block_count += 1
+	var.progress_width = 448 * (var.block_count / 12)
+	__end__
+	set _prepare ""
+
+define inline_script block_count_update_1
+	set description "Executes Python code"
+	___run__
+	var.block_count += 1
+	var.progress_width = 448 * (var.block_count / 36)
+	__end__
+	set _prepare ""
+
+define loop block_loop
+	set source table
+	set skip 0
+	set repeat 1
+	set order random
+	set offset no
+	set item trial_sequence
+	set description "A single block of trials"
+	set cycles 12
+	set continuous no
+	set column_order ""
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 difficulty hard
+	setcycle 0 correct_response 0
+	setcycle 1 difficulty medium
+	setcycle 1 correct_response 0
+	setcycle 2 difficulty easy
+	setcycle 2 correct_response 0
+	setcycle 3 difficulty hard
+	setcycle 3 correct_response 0
+	setcycle 4 difficulty medium
+	setcycle 4 correct_response 0
+	setcycle 5 difficulty easy
+	setcycle 5 correct_response 0
+	setcycle 6 difficulty hard
+	setcycle 6 correct_response 0
+	setcycle 7 difficulty medium
+	setcycle 7 correct_response 0
+	setcycle 8 difficulty easy
+	setcycle 8 correct_response 0
+	setcycle 9 difficulty hard
+	setcycle 9 correct_response 0
+	setcycle 10 difficulty medium
+	setcycle 10 correct_response 0
+	setcycle 11 difficulty easy
+	setcycle 11 correct_response 0
+	run trial_sequence
+
+define loop block_loop_1
+	set source table
+	set skip 0
+	set repeat 3
+	set order random
+	set offset no
+	set item trial_sequence
+	set description "A single block of trials"
+	set cycles 12
+	set continuous no
+	set column_order ""
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 difficulty hard
+	setcycle 0 correct_response 0
+	setcycle 1 difficulty medium
+	setcycle 1 correct_response 0
+	setcycle 2 difficulty easy
+	setcycle 2 correct_response 0
+	setcycle 3 difficulty hard
+	setcycle 3 correct_response 0
+	setcycle 4 difficulty medium
+	setcycle 4 correct_response 0
+	setcycle 5 difficulty easy
+	setcycle 5 correct_response 0
+	setcycle 6 difficulty hard
+	setcycle 6 correct_response 0
+	setcycle 7 difficulty medium
+	setcycle 7 correct_response 0
+	setcycle 8 difficulty easy
+	setcycle 8 correct_response 0
+	setcycle 9 difficulty hard
+	setcycle 9 correct_response 0
+	setcycle 10 difficulty medium
+	setcycle 10 correct_response 0
+	setcycle 11 difficulty easy
+	setcycle 11 correct_response 0
+	run trial_sequence_1
+
+define sequence block_sequence
+	set flush_keyboard yes
+	set description "A sequence containing a single block of trials followed by feedback to the participant"
+	run reset_feedback always
+	run __init__ always
+	run block_loop always
+
+define sequence block_sequence_1
+	set flush_keyboard yes
+	set description "A sequence containing a single block of trials followed by feedback to the participant"
+	run reset_feedback_1 always
+	run __init___1 always
+	run block_loop_1 always
+
+define inline_script conditional
+	set description "Executes Python code"
+	set _run ""
+	___prepare__
+	import random
+	
+	var.time_text_response = 0
+	
+	if var.difficulty == 'easy':
+	    var.multiplier = random.randint(0,10)
+	    var.multiplicand = random.randint(0,5)
+	    
+	if var.difficulty == 'medium':
+	    var.multiplier = random.randint(0,10)
+	    var.multiplicand = random.randint(0,10)
+	    
+	if var.difficulty == 'hard':
+	    var.multiplier = random.randint(0,20)
+	    var.multiplicand = random.randint(0,10)
+	
+	var.answer = var.multiplier * var.multiplicand
+	var.correct_response = var.answer
+	
+	print(f'Multiplier: {var.multiplier}')
+	print(f'Multiplicand: {var.multiplicand}')
+	
+	print(f'Correct answer: {var.answer}')
+	print(f'Correct response: {var.correct_response}')
+	__end__
+
+define inline_script conditional_1
+	set description "Executes Python code"
+	set _run ""
+	___prepare__
+	import random
+	
+	if var.difficulty == 'easy':
+	    var.multiplier = random.randint(0,10)
+	    var.multiplicand = random.randint(0,5)
+	    
+	if var.difficulty == 'medium':
+	    var.multiplier = random.randint(0,10)
+	    var.multiplicand = random.randint(0,10)
+	    
+	if var.difficulty == 'hard':
+	    var.multiplier = random.randint(0,20)
+	    var.multiplicand = random.randint(0,10)
+	
+	var.answer = var.multiplier * var.multiplicand
+	var.correct_response = var.answer
+	
+	print(f'Multiplier: {var.multiplier}')
+	print(f'Multiplicand: {var.multiplicand}')
+	
+	print(f'Correct answer: {var.answer}')
+	print(f'Correct response: {var.correct_response}')
+	__end__
+
+define sketchpad end_of_experiment
+	set start_response_interval no
+	set duration keypress
+	set description "A sketchpad notifying the participant that the experiment is finished"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to exit" x=0 y=0 z_index=0
+
+define sketchpad end_of_practice
+	set start_response_interval no
+	set duration keypress
+	set description "A sketchpad notifying the participant that the practice phase is finished"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="End of practice.<br />Press a key to start experiment<br />" x=0 y=0 z_index=0
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "The main sequence of the experiment"
+	run practice_loop always
+	run end_of_practice always
+	run experimental_loop_1 always
+	run end_of_experiment always
+
+define loop experimental_loop
+	set source_file ""
+	set source table
+	set skip 0
+	set repeat 1
+	set order random
+	set offset no
+	set item block_sequence
+	set description "A loop containing one or more experimental blocks"
+	set cycles 1
+	set continuous no
+	set column_order practice
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 practice no
+	run block_sequence
+
+define loop experimental_loop_1
+	set source_file ""
+	set source table
+	set skip 0
+	set repeat 1
+	set order random
+	set offset no
+	set item block_sequence
+	set description "A loop containing one or more practice blocks"
+	set cycles 1
+	set continuous no
+	set column_order practice
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 practice 1
+	run block_sequence_1
+
+define feedback feedback
+	set reset_variables yes
+	set duration keypress
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Your average response time was [avg_rt]ms<br /><br />Your accuracy was [acc]%<br /><br />Press any key to continue" x=0 y=0 z_index=0
+
+define sketchpad fixation
+	set duration 2000
+	set description "Displays stimuli"
+	draw line color=white penwidth=1 show_if=always x1=0 x2=0 y1=-32 y2=32 z_index=0
+	draw line color=white penwidth=1 show_if=always x1=-32 x2=32 y1=0 y2=0 z_index=0
+
+define sketchpad fixation_1
+	set duration 2000
+	set description "Displays stimuli"
+	draw line color=white penwidth=1 show_if=always x1=0 x2=0 y1=-32 y2=32 z_index=0
+	draw line color=white penwidth=1 show_if=always x1=-32 x2=32 y1=0 y2=0 z_index=0
+
+define sketchpad fixation_2
+	set duration 5000
+	set description "Displays stimuli"
+	draw line color=white penwidth=1 show_if=always x1=0 x2=0 y1=-32 y2=32 z_index=0
+	draw line color=white penwidth=1 show_if=always x1=-32 x2=32 y1=0 y2=0 z_index=0
+
+define sketchpad fixation_2_1
+	set duration 5000
+	set description "Displays stimuli"
+	draw line color=white penwidth=1 show_if=always x1=0 x2=0 y1=-32 y2=32 z_index=0
+	draw line color=white penwidth=1 show_if=always x1=-32 x2=32 y1=0 y2=0 z_index=0
+
+define sketchpad instructions
+	set start_response_interval no
+	set duration keypress
+	set description "A sketchpad containing the instructions for the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to begin!" x=0 y=0 z_index=0
+
+define keyboard_response keyboard_response
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses "1;2;3;4;5;6;7;8;9;0"
+
+define keyboard_response keyboard_response_1
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses "1;2;3;4;5;6;7;8;9;0"
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log yes
+
+define logger logger_1
+	set description "Logs experimental data"
+	set auto_log yes
+
+define sketchpad muliplier
+	set duration 500
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=52 html=yes show_if=always text="[multiplier]" x=0 y=0 z_index=0
+
+define sketchpad multiplicand
+	set duration 500
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=52 html=yes show_if=always text="[multiplicand]" x=0 y=0 z_index=0
+
+define feedback multiplicand_1
+	set reset_variables yes
+	set duration 500
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=52 html=yes show_if=always text="[multiplicand]" x=0 y=0 z_index=0
+
+define feedback multiplicand_1_1
+	set reset_variables yes
+	set duration 500
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=52 html=yes show_if=always text="[multiplicand]" x=0 y=0 z_index=0
+
+define feedback multiplier
+	set reset_variables yes
+	set duration 500
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=52 html=yes show_if=always text="[multiplier]" x=0 y=0 z_index=0
+
+define feedback multiplier_1
+	set reset_variables yes
+	set duration 500
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=52 html=yes show_if=always text="[multiplier]" x=0 y=0 z_index=0
+
+define form_text_input new_form_text_input
+	set timeout infinite
+	set spacing 10
+	set rows "1;1;6"
+	set only_render no
+	set margins "50;50;50;50"
+	set form_var response
+	set form_title Title
+	set form_question "Your question"
+	set description "A simple text input form"
+	set cols 1
+	set _theme gray
+	widget 0 0 1 1 label text="[form_title]"
+	widget 0 1 1 1 label center=no text="[form_question]"
+	widget 0 2 1 1 text_input focus=yes return_accepts=yes stub="" var="[form_var]"
+
+
+define form_text_input new_form_text_input_1_1
+	set timeout 5000
+	set spacing 10
+	set rows "1;1;6"
+	set only_render no
+	set margins "50;50;50;50"
+	set form_var response
+	set form_title Title
+	__form_question__
+	Type your answer
+	__end__
+	set description "A simple text input form"
+	set cols 1
+	set _theme gray
+	widget 0 0 1 1 label text="[form_title]"
+	widget 0 1 1 1 label center=no text="[form_question]"
+	widget 0 2 1 1 text_input focus=yes return_accepts=yes stub="" var="[form_var]"
+
+
+define inline_script new_inline_script
+	set description "Executes Python code"
+	set _run "var.response = var.response_text_input"
+	set _prepare ""
+
+define inline_script new_inline_script_1
+	set description "Executes Python code"
+	set _run "var.response = var.response_text_input"
+	set _prepare ""
+
+define loop practice_loop
+	set source_file ""
+	set source table
+	set skip 0
+	set repeat 1
+	set order random
+	set offset no
+	set item block_sequence
+	set description "A loop containing one or more practice blocks"
+	set cycles 1
+	set continuous no
+	set column_order practice
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 practice 0
+	run block_sequence
+
+define feedback progress_bar
+	set reset_variables yes
+	set duration 5000
+	set description "Provides feedback to the participant"
+	draw rect color=white fill=0 h=224 penwidth=1 show_if=always w=448 x=-224 y=-96 z_index=0
+	draw rect color=red fill=1 h=224 penwidth=1 show_if=always w="[progress_width]" x=-224 y=-96 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="Trial Progress:" x=-96 y=-160 z_index=0
+
+define feedback progress_bar_1
+	set reset_variables yes
+	set duration 5000
+	set description "Provides feedback to the participant"
+	draw rect color=white fill=0 h=224 penwidth=1 show_if=always w=448 x=-224 y=-96 z_index=0
+	draw rect color=red fill=1 h=224 penwidth=1 show_if=always w="[progress_width]" x=-224 y=-96 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="Trial Progress:" x=-96 y=-160 z_index=0
+
+define inline_script rec_time_response
+	set description "Executes Python code"
+	___run__
+	import time
+	
+	var.correct = var.correct_response == var.response
+	var.response_time = int((time.time() - var.start_time) * 1000)
+	
+	print(f'Correct: {var.correct}, time: {var.response_time}')
+	__end__
+	set _prepare ""
+
+define reset_feedback reset_feedback
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define reset_feedback reset_feedback_1
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define sketchpad sketchpad
+	set start_response_interval no
+	set duration 0
+	set description "Displays stimuli"
+	draw fixdot color=white show_if=always style=default x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text=X x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=52 html=yes show_if=always text="X<br />" x=-288 y=0 z_index=0
+
+define inline_script start_count
+	set description "Executes Python code"
+	___run__
+	import time
+	
+	var.start_time = time.time()
+	__end__
+	set _prepare ""
+
+define form_text_input text_response
+	set timeout 5000
+	set spacing 10
+	set rows "1;1;6"
+	set only_render no
+	set margins "50;50;50;50"
+	set form_var response
+	set form_title Title
+	__form_question__
+	Type your answer
+	__end__
+	set description "A simple text input form"
+	set cols 1
+	set _theme gray
+	widget 0 0 1 1 label text="[form_title]"
+	widget 0 1 1 1 label center=no text="[form_question]"
+	widget 0 2 1 1 text_input focus=yes return_accepts=yes stub="" var="[form_var]"
+
+
+define sequence trial_sequence
+	set flush_keyboard yes
+	set description "A single trial"
+	run conditional always
+	run fixation always
+	run multiplier always
+	run blank always
+	run multiplicand_1 always
+	run fixation_2 always
+	run type_answer always
+	run start_count always
+	run text_response always
+	run rec_time_response always
+	run keyboard_response never
+	run logger always
+	run block_count_update always
+	run progress_bar always
+
+define sequence trial_sequence_1
+	set flush_keyboard yes
+	set description "A single trial"
+	run conditional_1 always
+	run fixation_1 always
+	run multiplier_1 always
+	run blank_1 always
+	run multiplicand_1_1 always
+	run fixation_2_1 always
+	run type_answer_1 always
+	run new_form_text_input_1_1 always
+	run keyboard_response_1 never
+	run logger_1 always
+	run block_count_update_1 always
+	run progress_bar_1 always
+
+define sketchpad type_answer
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="Type your answer" x=0 y=0 z_index=0
+
+define sketchpad type_answer_1
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="Type your answer" x=0 y=0 z_index=0
+
